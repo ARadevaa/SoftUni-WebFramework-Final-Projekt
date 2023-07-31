@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/b0f212325a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="{% static 'css/styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/grocery_store.png' %}" >
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lumanosimo&display=swap" rel="stylesheet">
+    <title>Grocery Store</title>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <ul>
+            <li><h1>MySuperMarket</h1></li>
+            <li><img src="{% static 'images/logo2.jpg' %}"></li>
+            <li class="time">Working hours: <time>10:00</time> - <time>22:00</time></li>
+        </ul>
+    </div>
+</header>
+
+{% include 'base/nav.html' %}
+
+<main>
+    {% block page_content %}
+    {% endblock %}
+</main>
+
+<footer>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contacts</a></li>
+    </ul>
+    <ul class="icons">
+        <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+        <li><a href="#"></a><i class="fa-brands fa-twitter"></i></li>
+        <li><a href="#"></a><i class="fa-brands fa-instagram"></i></li>
+        <p>&copy; All rights reserved SUPERMARKET 2023</p>
+    </ul>
+</footer>
+
+</body>
+</html>

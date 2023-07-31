@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block page_content %}
+
+<h1>Hello {{ request.user.username }} </h1>
+<ul class="add-link">
+            <li><a href="{% url 'order_history' %}">Order History</a></li>
+            <li><a href="{% url 'profile edit' pk=user.pk %}">Edit Profile</a></li>
+            <li><a href="{% url 'profile delete' pk=user.pk %}">Delete Profile</a></li>
+</ul>
+
+
+{% endblock %}

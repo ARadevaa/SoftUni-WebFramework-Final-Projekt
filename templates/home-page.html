@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block page_content %}
+
+        <div class="searchbar">
+
+            <!-- Start Searchbar Form -->
+            <form class="searchbar" method="get" action="{% url 'index' %}">
+                {{ search_form }}
+                <button>
+                    <img src="{% static 'images/search.png' %}" height="30"  alt="img2">
+                </button>
+            </form>
+        </div>
+
+        <section id="bg" style="background-image: url('{% static 'images/fruitsveggies.jpg' %}')" >
+            <h1>WE BRING FOOD TO YOUR <span>HOME</span></h1>
+            <button class="orange">READ MORE</button>
+        </section>
+
+
+    {% include 'partials/promo_products.html' %}
+
+{% endblock %}

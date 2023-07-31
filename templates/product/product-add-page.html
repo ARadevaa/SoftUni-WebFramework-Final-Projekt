@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+    <!-- Start Add Photo Section -->
+    <div >
+        <h2>Add product</h2>
+        <!-- Start Add Photo Form -->
+        <form action="{% url 'product add'  %}"  method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <!-- Add Photo Button -->
+            <button class="add-btn" type="submit">Add Product</button>
+        </form>
+        <!-- End Add Photo Form -->
+    </div>
+    <!-- End Add Photo Section -->
+{% endblock %}

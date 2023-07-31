@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+
+<head>
+    <title>Order Confirmation</title>
+</head>
+<body>
+    <h1>Order Confirmation</h1>
+    <p>Thank you for your order! Your order has been successfully placed.</p>
+
+    <h2>Order Details</h2>
+    <p><strong>Order ID:</strong> {{ order.pk }}</p>
+    <p><strong>Date:</strong> {{ order.created_at }}</p>
+    <p><strong>Status:</strong> {{ order.status }}</p>
+
+    <h2>Ordered Items</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.cart.items.all %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.product.price }}</td>
+                    <td>{{ item.total_price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Total Order Cost</h2>
+    <p>{{ order.cart.get_cart_total }}</p>
+
+    <!-- Add more details or additional information about the order as needed -->
+</body>
+{% endblock %}

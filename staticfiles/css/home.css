@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lumanosimo&display=swap');
+
+.searchbar{
+    /*padding:10px;*/
+  width: -5%;
+  /*margin: 0 18% 5% 0;*/
+  text-align: center;
+}
+
+.searchbar input {
+    background-color: #fafafa;
+    width: 50%;
+    padding: 5px 5px 5px 0;
+    text-indent: 21px;
+    outline: none;
+    border: 1px solid rgb(218, 217, 217);
+    border-radius: 2px;
+    color: rgb(77, 77, 77);
+}
+
+.searchbar button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.searchbar img {
+  position: relative;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+}
+
+.searchbar input::placeholder {
+    font-weight: lighter;
+    color: rgb(172, 172, 172);
+}
+
+
+
+body {
+  font-family: "Helvetica",
+  sans-serif;
+  margin: auto;
+  padding: 20px;
+}
+
+nav {
+  background: #e32214;
+  text-align: center;
+}
+
+nav ul {
+  text-align: center;
+  margin: 0;
+  padding: 5px;
+}
+nav ul li {
+  display: inline-block;
+  text-align: center;
+}
+
+nav ul li a {
+  display: block;
+  padding: 10px 10px;
+  text-decoration: none;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  font-family: "Helvetica", sans-serif;
+}
+
+.logo h1{
+  margin: 0;
+  color: black;
+  font-family:"Lumanosimo";
+
+}
+
+.logo li{
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 0;
+}
+
+.logo img{
+  padding: 0 300px 0 300px;
+  width: 600px;
+  height: 200px;
+}
+.searchbar form{
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  color: #4b4848;
+}
+section{
+  margin-top: 0.5rem;
+  background-size: cover;
+  background-position: center;
+  padding: 11rem;
+  text-align: center;
+}
+section h1{
+  text-shadow: #40484a;
+  text-align: center;
+  color: white;
+  font-size: 50px;
+}
+section span{
+  color: orange;
+}
+.orange{
+  text-align: center;
+  color: white;
+  background: #ff9021;
+  font-size: 25px;
+  border-radius: 5px;
+  padding: 5px;
+  font-weight: lighter;
+  border-color: white;
+}
+
+.orange:hover{
+  background: #fafafa;
+  color: #ff9021;
+}
+main div ul{
+  text-align: center;
+  display: inline-block;
+}
+main div{
+  text-align: center;
+}
+
+main div img{
+  width: 150px;
+  height: 150px;
+  padding: 40px;
+}
+
+footer{
+  text-align: center;
+  background: #e32214;
+  color: white;
+  padding: 20px;
+}
+
+footer ul{
+  margin-right: 3%;
+}
+footer ul li{
+  text-align: center;
+  display: inline-block;
+}
+footer ul li a{
+  color: white;
+  text-decoration: none;
+}
+main p{
+  text-align: center;
+  color: black;
+  border-color: gray;
+  border-radius: 5px;
+  font-family:"sans-serif";
+  padding: 5px;
+  margin: 0;
+
+}
+
+.promotions button{
+  background: #dddddd ;
+  color: gray;
+  border-color: gray;
+  padding: 10px;
+  border-radius: 5px ;
+}
+.promotions button:hover{
+  color: white;
+  background: #40484a;
+}
+
+
+.time{
+  color: gray;
+  margin-left: 85%;
+}
+
+.promotions h2{
+ font-family: 'Raleway', sans-serif;
+}
+.promotions ul img{
+  width: 200px;
+  height: 200px;
+}
+.quantity{
+  margin-left: 80px;
+  margin-bottom: 5px;
+  margin-right: 80px;
+  background: darkgrey;
+  color: #FFFFFF;
+}
+.promotions{
+  font-family: 'Raleway', sans-serif;
+}
+
+.icons{
+  display: inline-block;
+}
+.amount{
+  color: #FFFFFF;
+  font-family: "Helvetica", sans-serif;
+}
+.bag ul{
+  padding-left: 40px;
+  margin: 10px;
+}
+.amount{
+  padding: 0;
+}
+.icon {
+  padding: 0;
+
+}

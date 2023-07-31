@@ -1,0 +1,27 @@
+{% load static %}
+
+<header>
+    <nav class="navigation">
+        <ul>
+
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="#">Orders</a></li>
+            <li><a href="{% url 'inventory details' %}">Inventory</a></li>
+            <li><a href="{% url 'category details'  %}">Categories</a></li>
+            <li><a href="{% url 'promo_products'  %}">&percnt;PROMO</a></li>
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'profile details' pk=user.pk  %}"><i>{{ request.user.username }}</i></a></li>
+            <li><a href="{% url 'logout user' %}"><i>Logout</i></a></li>
+            <li class="bag">
+                <ul>
+                    <li class="icon"><a href="{% url 'view_cart' %}"><i class="fa-solid fa-bag-shopping"></i></a></li>
+                    <li class="amount"><a><i>{{ total_order_cost }}lv</i></a></li>
+                </ul>
+            </li>
+        {% else %}
+            <li><a href="{% url 'login user' %}"><i>Login</i></a></li>
+            <li><a href="{% url 'register user' %}"><i>Register</i></a></li>
+        {% endif %}
+        </ul>
+    </nav>
+</header>

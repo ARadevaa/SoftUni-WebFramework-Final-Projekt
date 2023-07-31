@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+    <div >
+        <h2>Add category</h2>
+        <!-- Start Add Photo Form -->
+        <form action="{% url 'category add'  %}"  method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <!-- Add Photo Button -->
+            <button class="add-btn" type="submit">Add Category</button>
+        </form>
+    </div>
+{% endblock %}

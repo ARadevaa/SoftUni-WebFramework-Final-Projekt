@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+{% load  static %}
+
+{% block page_content %}
+
+<h1>Promo Products</h1>
+<ul>
+            <li><a href="{% url 'add_products_to_promo' %}">Add promo product</a></li>
+</ul>
+
+    <header>
+        <div class="promotions">
+        {% for promo in promo_products %}
+        <ul>
+            <h2>{{ promo.product.name }}</h2>
+            <img src="{{ promo.product.product_image }}" alt="{{ promo.product.name }}">
+            <p><s class="price">{{ promo.product.price }}<i>lv.</i></s></p>
+            <p class="discount-price">{{ promo.discounted_price }}<i>lv.</i></p>
+            <p class="quantity">{{ promo.product.product_quantity }}<i>gr.</i></p>
+            <p class="percentage">{{ promo.discount_percentage }}<i>%</i></p>
+            <button> Add to bag </button>
+        </ul>
+        {% empty %}
+        <li>
+            No products in this category.
+        </li>
+        {% endfor %}
+        </div>
+    </header>
+
+{% endblock %}

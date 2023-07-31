@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load  static %}
+
+{% block page_content %}
+        <div class="categories-list">
+        {% for category in all_categories %}
+            <ul>
+                <li>
+                    <a class="categories-list-items" href="{% url 'products_by_category' category_id=category.id %}">
+                        <img src="{{ category.category_image }}" alt="{{ category.name }}" >
+                        <span><h2>{{ category.name }}</h2></span>
+                    </a>
+{#                  <p>{{ category.description }}</p>#}
+{#                  <button> Add to bag </button>#}
+                 </li>
+            </ul>
+
+        {% endfor %}
+        </div>
+    {# TODO: if permition #}
+
+    <li><a class="add-link" href="{% url 'category add' %}"><i>Add category</i></a></li>
+
+{% include 'partials/all_products.html' %}
+
+
+{% endblock %}
