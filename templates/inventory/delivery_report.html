@@ -4,19 +4,6 @@
 {% block page_content %}
 
     <h1>Delivery Report</h1>
-{#        {% for report in reports %}#}
-{#            <ul>#}
-{#                <p class="date">{{ delivery.delivery_date }}</p>#}
-{#                <p class="delivered_product">{{ delivery.product.name }}</p>#}
-{#                <p class="quantity">{{ delivery.quantity_delivered }}</p>#}
-{#                <button> See details </button>#}
-{#            </ul>#}
-{#        {% empty %}#}
-{#            <li>#}
-{#                No deliveries.#}
-{#            </li>#}
-{#        {% endfor %}#}
-
         <table class="reports">
             <thead>
                 <tr>
@@ -26,11 +13,11 @@
                 </tr>
             </thead>
             <tbody>
-                {% for report in reports %}
+                {% for delivery in all_deliveries %}
                     <tr>
                         <td>{{ delivery.delivery_date }}</td>
                         <td>{{ delivery.product.name }}</td>
-                        <td>{{ delivery.quantity_delivered }}</td>
+                        <td>{{ delivery.quantity }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

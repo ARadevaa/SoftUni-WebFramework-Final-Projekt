@@ -6,7 +6,7 @@ from grocery_store.inventory.models import Delivery, Report
 # Register your models here.
 @admin.register(Delivery)
 class DeliveryAddAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['product', 'delivery_date', 'quantity']
 
 
 @admin.register(Report)

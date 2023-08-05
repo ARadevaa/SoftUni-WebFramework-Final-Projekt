@@ -1,6 +1,7 @@
 body > main > header > h2{
     color: white;
     background: orange;
+    border: 1px solid rgb(156, 152, 152);
     border-color: gray;
     border-radius: 5px;
     padding-left: 50px;

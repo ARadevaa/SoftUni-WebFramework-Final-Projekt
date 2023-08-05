@@ -1,25 +1,26 @@
 <header class="all_products">
-<h2 class="title" >All products:</h2>
-            <div class="products">
-            {% for product in all_products%}
-            <ul>
-                <a href="{% url 'product detail' product.slug %}"><h2>{{ product.name }}</h2></a>
-                <img src="{{ product.product_image }}" alt="{{ product.name }}">
-                <p class="quantity">{{ product.product_quantity }}<i>gr.</i></p>
-                <p class="available-quantity">{{ product.available_quantity }}<i>gr.</i></p>
-                <p class="price">{{ product.price }}<i>lv.</i></p>
-{#                <button> Add to bag </button>#}
-                <form method="post" action="{% url 'add_to_cart' product.slug %}">
-                    {% csrf_token %}
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" name="quantity" value="1" min="1">
-                    <button type="submit">Add to Bag</button>
-                </form>
-            </ul>
-            {% empty %}
-            <li>
-                No promo products.
-            </li>
-            {% endfor %}
-            </div>
+    <h2 class="title">All products:</h2>
+    <div class="products">
+        {% for product in all_products %}
+            {% if product not in promo_products %}
+                <ul>
+                    <a href="{% url 'product detail' product.slug %}"><h2>{{ product.name }}</h2></a>
+                    <img src="{{ product.product_image }}" alt="{{ product.name }}">
+                    <p class="quantity">{{ product.product_quantity }}<i>gr.</i></p>
+                    <p class="available-quantity">{{ product.available_quantity }}<i>gr.</i></p>
+                    <p class="price">{{ product.price }}<i>lv.</i></p>
+                    {#                <button> Add to bag </button>#}
+                    <form method="post" action="{% url 'add_to_cart' product.slug %}">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" value="1">
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                </ul>
+            {% else %}
+                <li>
+                    No products.
+                </li>
+            {% endif %}
+        {% endfor %}
+    </div>
 </header>

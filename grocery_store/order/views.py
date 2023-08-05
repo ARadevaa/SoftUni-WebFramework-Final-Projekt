@@ -1,50 +1,86 @@
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from grocery_store.cart.models import Cart
-from grocery_store.order.models import Order
+from django.urls import reverse
+
+from grocery_store.order.models import Order, OrderedItems
+from grocery_store.product.models import Product
 
 
 @login_required
 def place_order(request):
     if request.method == 'POST':
-        user_cart = Cart.objects.filter(user=request.user)  # Change this if using AnonymousUser
+        cart_items = request.session.get('cart_items', [])
 
-        if not user_cart.exists():
-            # Handle empty cart; redirect to view_cart or show an error message
+        if not cart_items:
             return redirect('view_cart')
 
-        # Create a new order for the user
-        order = Order.objects.create(user=request.user, cart=user_cart.first())
+        # Create the Order instance and associate it with the user's cart
+        order = Order.objects.create(user=request.user)
 
-        # Set the order status to 'Pending' (you can set any initial status you prefer)
-        order.status = 'Pending'
-        order.save()
+        # Move cart items to OrderedItems and associate them with the Order
+        for cart_item in cart_items:
+            product_id = cart_item.get('product_id')
+            quantity = cart_item.get('quantity', 0)
 
-        # Optionally, you can add other order-related logic here, such as sending order confirmation emails
+            if product_id and quantity:
+                product = get_object_or_404(Product, id=product_id)
 
-        # Clear the user's cart after the order is placed
-        user_cart.delete()
+                ordered_item = OrderedItems.objects.create(
+                    user=request.user,
+                    product=product,
+                    quantity=quantity,
+                )
+                order.items.add(ordered_item)  # Associate the OrderedItem with the Order
 
-        # Redirect to a page that shows the order confirmation or order history
-        return redirect('order_confirmation', order_id=order.pk)  # Replace 'order_confirmation' with the URL name of the order confirmation page
+        # Clear the cart items from the session after the order is placed
+        del request.session['cart_items']
+
+        # Redirect to the order confirmation page with the order_id
+        return redirect('order_confirmation', order_id=order.id)
     else:
-        return redirect('order_confirmation')  # Redirect to the cart if the request method is not POST
+        return redirect('view_cart')
 
 
 @login_required()
 def order_history(request):
-    if not request.user.is_authenticated:
-        # Redirect to the login page or handle anonymous users as needed
-        return redirect('login')
-    # Retrieve all orders for the current user
-    user_orders = Order.objects.filter(user=request.user)
+    # Get all orders for the logged-in user
+    orders = Order.objects.filter(user=request.user)
 
-    return render(request, 'order/order_history.html', {'orders': user_orders})
+    # You can use the 'orders' queryset to display order history in the template
+    context = {
+        'orders': orders,
+    }
+    return render(request, 'order/order_history.html', context)
 
 
 @login_required
 def order_confirmation(request, order_id):
-    # Retrieve the order using the provided order_id
-    order = get_object_or_404(Order, pk=order_id)
+    # Get the order object based on the order_id
+    try:
+        order = Order.objects.get(id=order_id)
+        items = order.items.all()
+        total_order_cost = 0
+        for item in items:
+            total_order_cost += item.total_price
 
-    return render(request, 'order/order_confirmation.html', {'order': order})
+    except Order.DoesNotExist:
+        raise Http404("Order not found")
+
+    context = {
+        'order': order,
+        'items': items,
+        'total_order_cost': total_order_cost,
+    }
+    return render(request, 'order/order_confirmation.html', context)
+
+
+def all_orders(request):
+
+    all_orders = Order.objects.all()
+
+    context = {
+        'all_orders': all_orders
+    }
+
+    return render(request, 'order/all_orders.html', context)

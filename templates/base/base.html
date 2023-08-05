@@ -6,7 +6,7 @@
     <script src="https://kit.fontawesome.com/b0f212325a.js" crossorigin="anonymous"></script>
     <link rel="stylesheet"
           href="{% static 'css/styles.css' %}">
-    <link rel="icon" type="image/x-icon" href="{% static 'images/grocery_store.png' %}" >
+    <link rel="icon" type="image/x-icon" href="{% static 'images/grocery_store.png' %}">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,12 +19,27 @@
         <ul>
             <li><h1>MySuperMarket</h1></li>
             <li><img src="{% static 'images/logo2.jpg' %}"></li>
-            <li class="time">Working hours: <time>10:00</time> - <time>22:00</time></li>
+            <li class="time">Working hours:
+                <time>10:00</time>
+                -
+                <time>22:00</time>
+            </li>
         </ul>
     </div>
 </header>
 
 {% include 'base/nav.html' %}
+
+<div class="searchbar">
+
+    <!-- Start Searchbar Form -->
+    <form class="searchbar" method="get" action="">
+        {{ search_form }}
+        <button>
+            <img src="{% static 'images/search.png' %}" height="30" alt="img2">
+        </button>
+    </form>
+</div>
 
 <main>
     {% block page_content %}

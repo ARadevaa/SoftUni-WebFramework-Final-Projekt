@@ -3,13 +3,51 @@
 
 {% block page_content %}
 
-<h1>All Products </h1>
-<ul class="add-link">
-            <li><a href="{% url 'product add' %}">Add new product</a></li>
-            <li><a href="{% url 'delivery add' %}">New delivery</a></li>
-            <li><a href="{% url 'delivery reports' %}">Reports</a></li>
-</ul>
-
-    {% include 'partials/all_products.html' %}
+    <h1>All Products </h1>
+    <ul class="add-link">
+        <li><a href="{% url 'product add' %}">Add new product</a></li>
+        <li><a href="{% url 'add_products_to_promo' %}">Add promo to product</a></li>
+        <li><a href="{% url 'category add' %}">Add new category</a></li>
+        <li><a href="{% url 'delivery add' %}">Add new delivery</a></li>
+        <li><a href="{% url 'delivery reports' %}">Delivery Report</a></li>
+    </ul>
+    <table class="inventory">
+        <thead class="table-head">
+        <tr>
+            <th>Product Id</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Available quantity</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead >
+        <tbody class="table-body">
+        {% for product in all_products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.product_quantity }}</td>
+                <td>{{ product.available_quantity }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.category }}</td>
+                <td>
+                <form method="post" action="{% url 'product edit' product.slug %}">
+                    {% csrf_token %}
+                    <button type="submit">Edit</button>
+                </form>
+                </td>
+                <td>
+                <form method="post" action="{% url 'product delete' product.slug %}">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

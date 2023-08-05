@@ -1,35 +1,38 @@
 {% extends 'base/base.html' %}
 
 {% block page_content %}
-
     <h1>Your Cart</h1>
     {% if cart_items %}
         <table>
             <thead class="table-head">
-                <tr>
-                    <th>Product Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total Price</th>
-                </tr>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total Price</th>
+                <th>Actions</th>
+            </tr>
             </thead>
             <tbody class="table-body">
-                {% for cart_item in cart_items %}
-                    <tr>
-                        <td>{{ cart_item.product.name }}</td>
-                        <td>{{ cart_item.quantity }}</td>
-                        <td>{{ cart_item.product.price }}</td>
-                        <td>{{ cart_item.total_price }}</td>
-                        <td>{{ cart_item.total_cost}}</td>
-                    </tr>
-                {% endfor %}
+            {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }} </td>
+                    <td>{{ item.product.price }}</td>
+                    <td>{{ item.total_price }}</td>
+                    <td>
+                        <a href="{% url 'remove_from_cart' item.product.slug %}">Remove</a>
+                    </td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
         <p class="total-price">Total Order Cost: {{ total_order_cost }}</p>
-        <form method="post" action="{% url 'place_order' %}">
+        <form action="{% url 'place_order' %}" method="post">
             {% csrf_token %}
-            <input type="hidden" name="cart_id" value="{{ cart_items.0.cart.pk }}"> <!-- Use the first cart item to get the cart ID -->
-            <button type="submit">Place Order</button>
+            <!-- Add other fields and form elements here, if any -->
+            <input type="hidden" name="product" value="{{ product.id }}">
+            <input type="submit" value="Place Order">
         </form>
     {% else %}
         <p>Your cart is empty.</p>

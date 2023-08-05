@@ -52,7 +52,7 @@ class Product(models.Model):
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.pk} - {self.name}"
+        return f"{self.pk} - {self.name} - {self.price} - {self.available_quantity} - {self.category}"
 
 
 class Promo(models.Model):

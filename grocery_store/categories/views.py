@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from grocery_store.cart.models import Cart
+
 from grocery_store.categories.forms import CategoryCreateForm
 from grocery_store.categories.models import Category
+from grocery_store.inventory.decorators import group_required
 from grocery_store.product.models import Product, Promo
 
 
@@ -21,6 +22,7 @@ def products_by_category(request, category_id):
     return render(request, 'category/products_by_category.html', context)
 
 
+@group_required("Staff")
 def category_add(request):
     form = CategoryCreateForm
 
@@ -40,8 +42,6 @@ def category_add(request):
 @login_required
 def category_details(request):
     categories = Category.objects.all()
-    cart_items = Cart.objects.filter(user=request.user)
-    total_order_cost = sum(cart_item.total_price for cart_item in cart_items)
     products = Product.objects.all()
     promo_products = Promo.objects.all()
 
@@ -49,16 +49,16 @@ def category_details(request):
         "all_products": products,
         "all_categories": categories,
         "promo_products": promo_products,
-        "cart_items": cart_items,
-        "total_order_cost": total_order_cost
     }
 
     return render(request, 'category/category-details-page.html', context)
 
 
+@group_required("Staff")
 def category_edit(request):
     return render(request, 'category/category-edit-page.html')
 
 
+@group_required("Staff")
 def category_delete(request):
     return render(request, 'category/category-delete-page.html')

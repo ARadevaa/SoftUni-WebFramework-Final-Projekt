@@ -4,9 +4,6 @@
 {% block page_content %}
 
 <h1>Promo Products</h1>
-<ul>
-            <li><a href="{% url 'add_products_to_promo' %}">Add promo product</a></li>
-</ul>
 
     <header>
         <div class="promotions">
@@ -18,7 +15,12 @@
             <p class="discount-price">{{ promo.discounted_price }}<i>lv.</i></p>
             <p class="quantity">{{ promo.product.product_quantity }}<i>gr.</i></p>
             <p class="percentage">{{ promo.discount_percentage }}<i>%</i></p>
-            <button> Add to bag </button>
+            <form method="post" action="{% url 'add_to_cart' promo.product.slug %}">
+                {% csrf_token %}
+                <label for="quantity">Quantity:</label>
+                <input type="number" name="quantity" value="1" min="1">
+                <button type="submit">Add to Bag</button>
+            </form>
         </ul>
         {% empty %}
         <li>

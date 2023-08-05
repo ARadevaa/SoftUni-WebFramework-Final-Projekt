@@ -6,4 +6,4 @@ from grocery_store.categories.models import Category
 # Register your models here.
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['name']

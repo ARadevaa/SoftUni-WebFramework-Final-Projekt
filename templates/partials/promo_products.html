@@ -1,20 +1,24 @@
 <header class="promo_products">
-<h2>Promotions!!!</h2>
-        <div class="promotions">
+    <h2>Promotions!!!</h2>
+    <div class="promotions">
         {% for promo in promo_products %}
-        <ul>
-            <h2>{{ promo.product.name }}</h2>
-            <img src="{{ promo.product.product_image }}" alt="{{ promo.product.name }}">
-            <p><s class="price">{{ promo.product.price }}<i>lv.</i></s></p>
-            <p class="discount-price">{{ promo.discounted_price }}<i>lv.</i></p>
-            <p class="quantity">{{ promo.product.product_quantity }}<i>gr.</i></p>
-            <p class="percentage">{{ promo.discount_percentage }}<i>%</i></p>
-            <button> Add to bag </button>
-        </ul>
+            <ul>
+                <h2>{{ promo.product.name }}</h2>
+                <img src="{{ promo.product.product_image }}" alt="{{ promo.product.name }}">
+                <p><s class="price">{{ promo.product.price }}<i>lv.</i></s></p>
+                <p class="discount-price">{{ promo.discounted_price }}<i>lv.</i></p>
+                <p class="quantity">{{ promo.product.product_quantity }}<i>gr.</i></p>
+                <p class="percentage">{{ promo.discount_percentage }}<i>%</i></p>
+                <form method="post" action="{% url 'add_to_cart' promo.product.slug %}">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="1">
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </ul>
         {% empty %}
-        <li>
-            No products in this category.
-        </li>
+            <li>
+                No products in this category.
+            </li>
         {% endfor %}
-        </div>
+    </div>
 </header>

@@ -19,5 +19,8 @@ class Category(models.Model):
         default="null",
     )
 
+    class Meta:
+        verbose_name_plural = "Categories"
+
     def __str__(self):
         return f"{self.pk} - {self.name}"

@@ -6,9 +6,10 @@ from grocery_store.product.models import Product, Promo
 # Register your models here.
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['name', 'price', 'available_quantity', 'category']
+    search_fields = ['name']
 
 
 @admin.register(Promo)
 class PromoAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['product', 'discount_percentage', 'discounted_price']

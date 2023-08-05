@@ -25,7 +25,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in order.cart.items.all %}
+            {% for item in items %}
                 <tr>
                     <td>{{ item.product.name }}</td>
                     <td>{{ item.quantity }}</td>
@@ -36,8 +36,7 @@
         </tbody>
     </table>
 
-    <h2>Total Order Cost</h2>
-    <p>{{ order.cart.get_cart_total }}</p>
+    <h2 class="total-price">Total Order Cost: {{ total_order_cost }}</h2>
 
     <!-- Add more details or additional information about the order as needed -->
 </body>
