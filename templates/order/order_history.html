@@ -1,22 +1,55 @@
+{#{% extends 'base/base.html' %}#}
+{##}
+{#{% block page_content %}#}
+{#<head>#}
+{#    <title>Order History</title>#}
+{#</head>#}
+{#<body>#}
+{#    <h1>Order History</h1>#}
+{#    <ul>#}
+{#        {% for order in orders %}#}
+{#            <li>#}
+{#                <a href="{% url 'product detail' product.slug %}"><h2>{{ product.name }}</h2></a>#}
+{#                <p><strong>Order ID:</strong> {{ order.pk }}</p>#}
+{#                <p><strong>Date:</strong> {{ order.created_at }}</p>#}
+{#                <p><strong>Status:</strong> {{ order.status }}</p>#}
+{#                <!-- You can add more details about each order as needed -->#}
+{#            </li>#}
+{#        {% empty %}#}
+{#            <li>No orders found.</li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#</body>#}
+{#{% endblock %}#}
 {% extends 'base/base.html' %}
+{% load static %}
+{% load sorting_tags %}
 
 {% block page_content %}
 <head>
     <title>Order History</title>
 </head>
 <body>
-    <h1>Order History</h1>
-    <ul>
-        {% for order in orders %}
-            <li>
-                <p><strong>Order ID:</strong> {{ order.pk }}</p>
-                <p><strong>Date:</strong> {{ order.created_at }}</p>
-                <p><strong>Status:</strong> {{ order.status }}</p>
-                <!-- You can add more details about each order as needed -->
-            </li>
-        {% empty %}
-            <li>No orders found.</li>
-        {% endfor %}
-    </ul>
+    <h2>Order History</h2>
+    <table>
+        <thead class="table-head">
+            <tr>
+                {% autosort orders %}
+                <th>{% anchor pk _("Order ID:") %}</th>
+                <th>{% anchor created_at _("Date of order:") %}</th>
+                <th>{% anchor status_choices _("Status:") %}</th>
+            </tr>
+        </thead>
+        <tbody class="table-body">
+
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.pk }}</td>
+                    <td>{{ order.created_at }}</td>
+                    <td>{{ order.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 {% endblock %}

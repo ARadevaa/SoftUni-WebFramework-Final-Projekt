@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load sorting_tags %}
+
+{% block page_content %}
+<head>
+    <title>Order History</title>
+</head>
+<body>
+    <h2>Order History</h2>
+    <table>
+        <thead class="table-head">
+            <tr>
+                {% autosort orders %}
+                <th>{% anchor pk _("Id:") %}</th>
+                <th>{% anchor user _("User:") %}</th>
+                <th>{% anchor created_at _("Date:") %}</th>
+                <th>{% anchor status_choices _("Status:") %}</th>
+            </tr>
+        </thead>
+        <tbody class="table-body">
+
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.pk }}</td>
+                    <td>{{ order.user }}</td>
+                    <td>{{ order.created_at }}</td>
+                    <td>
+                        <form method="post" action="{% url 'update_order_status' order.pk %}">
+                            {% csrf_token %}
+                            <select name="status" style="width:100px">
+                                {% for value, label in status_choices %}
+                                    <option value="{{ value }}" {% if order.status == value %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+{% endblock %}

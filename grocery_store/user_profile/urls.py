@@ -1,5 +1,6 @@
 from django.urls import path, include
 
+
 from grocery_store.user_profile.views import RegisterUserView, LoginUserView, LogoutUserView, ProfileDetailsView, \
     ProfileEditView, ProfileDeleteView
 

@@ -1,12 +1,16 @@
 {% load static %}
+{% load custom_filters %}
 
 <header>
     <nav class="navigation">
         <ul>
 
             <li><a href="{% url 'index' %}">Home</a></li>
+            {% if request.user|check_group:'Staff' %}
             <li><a href="{% url 'all_orders' %}">Orders</a></li>
             <li><a href="{% url 'inventory details' %}">Inventory</a></li>
+            {% endif %}
+            <li><a href="{% url 'product list'  %}">Products</a></li>
             <li><a href="{% url 'category details'  %}">Categories</a></li>
             <li><a href="{% url 'promo_products'  %}">&percnt;PROMO</a></li>
             {% if request.user.is_authenticated %}

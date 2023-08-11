@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
 
+from grocery_store.order.forms import SearchForm
 from grocery_store.order.models import Order, OrderedItems
 from grocery_store.product.models import Product
 
@@ -15,10 +15,8 @@ def place_order(request):
         if not cart_items:
             return redirect('view_cart')
 
-        # Create the Order instance and associate it with the user's cart
         order = Order.objects.create(user=request.user)
 
-        # Move cart items to OrderedItems and associate them with the Order
         for cart_item in cart_items:
             product_id = cart_item.get('product_id')
             quantity = cart_item.get('quantity', 0)
@@ -31,12 +29,10 @@ def place_order(request):
                     product=product,
                     quantity=quantity,
                 )
-                order.items.add(ordered_item)  # Associate the OrderedItem with the Order
+                order.items.add(ordered_item)
 
-        # Clear the cart items from the session after the order is placed
-        del request.session['cart_items']
+        request.session['cart_items'] = []
 
-        # Redirect to the order confirmation page with the order_id
         return redirect('order_confirmation', order_id=order.id)
     else:
         return redirect('view_cart')
@@ -44,10 +40,8 @@ def place_order(request):
 
 @login_required()
 def order_history(request):
-    # Get all orders for the logged-in user
-    orders = Order.objects.filter(user=request.user)
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
 
-    # You can use the 'orders' queryset to display order history in the template
     context = {
         'orders': orders,
     }
@@ -56,7 +50,6 @@ def order_history(request):
 
 @login_required
 def order_confirmation(request, order_id):
-    # Get the order object based on the order_id
     try:
         order = Order.objects.get(id=order_id)
         items = order.items.all()
@@ -75,12 +68,36 @@ def order_confirmation(request, order_id):
     return render(request, 'order/order_confirmation.html', context)
 
 
-def all_orders(request):
+@login_required
+def order_list(request,):
+    orders = Order.objects.all().order_by('-created_at')
 
-    all_orders = Order.objects.all()
+    search_form = SearchForm(request.GET)
+
+    if search_form.is_valid():
+        search_text = search_form.cleaned_data['search_text']
+        orders = orders.filter(status__icontains=search_text)
 
     context = {
-        'all_orders': all_orders
+        'orders': orders,
+        'status_choices': Order.STATUS_CHOICES,
+        "search_form": search_form,
     }
+    return render(request, 'order/all_orders_history.html', context)
 
-    return render(request, 'order/all_orders.html', context)
+
+@login_required
+def update_order_status(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+
+    if request.method == 'POST':
+        new_status = request.POST.get('status')
+        if new_status in dict(Order.STATUS_CHOICES).keys():
+            order.status = new_status
+            order.save()
+            return redirect('all_orders')
+
+    context = {
+        'order': order,
+    }
+    return render(request, 'order/order_status_update.html', context)

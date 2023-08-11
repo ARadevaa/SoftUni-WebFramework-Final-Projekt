@@ -2,7 +2,7 @@
     <h2 class="title">All products:</h2>
     <div class="products">
         {% for product in all_products %}
-            {% if product not in promo_products %}
+            {% if not product.promo %}
                 <ul>
                     <a href="{% url 'product detail' product.slug %}"><h2>{{ product.name }}</h2></a>
                     <img src="{{ product.product_image }}" alt="{{ product.name }}">

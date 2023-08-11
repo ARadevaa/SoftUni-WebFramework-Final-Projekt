@@ -1,7 +1,4 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-
-
 from grocery_store.common.forms import SearchForm
 from grocery_store.product.models import Product, Promo
 
@@ -16,7 +13,6 @@ def index(request):
     if search_form.is_valid():
         search_text = search_form.cleaned_data['search_text']
         products = products.filter(name__icontains=search_text)
-        # promo_products = promo_products.product.filter(name__icontains=search_text)
 
     context = {
         "all_products": products,
@@ -25,3 +21,4 @@ def index(request):
     }
 
     return render(request, 'home-page.html', context=context)
+

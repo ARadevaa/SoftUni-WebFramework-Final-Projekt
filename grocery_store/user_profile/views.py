@@ -78,8 +78,17 @@ class ProfileDetailsView(views.DetailView):
 
 
 class ProfileEditView(views.UpdateView):
+    model = UserModel
     template_name = 'user_profile/profile-edit-page.html'
+    fields = ('first_name', 'last_name', 'gender', 'profile_picture')
+
+    def get_success_url(self):
+        pk = self.object.pk
+        return reverse_lazy('profile details', kwargs={'pk': pk})
 
 
+# @method_decorator(login_required, name='dispatch')
 class ProfileDeleteView(views.DeleteView):
+    model = UserModel
     template_name = 'user_profile/profile-delete-page.html'
+    success_url = reverse_lazy('profile_list')

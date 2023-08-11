@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load sorting_tags %}
 
 {% block page_content %}
 
@@ -13,17 +14,18 @@
     </ul>
     <table class="inventory">
         <thead class="table-head">
+        {% autosort all_products %}
         <tr>
-            <th>Product Id</th>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th>Available quantity</th>
-            <th>Price</th>
-            <th>Category</th>
+            <th>{% anchor pk _("Product Id:") %}</th>
+            <th>{% anchor name _("Product Name:") %}</th>
+            <th>{% anchor product_quantity _("Quantity:") %}</th>
+            <th>{% anchor available_quantity _("Available quantity:") %}</th>
+            <th>{% anchor price _("Price:") %}</th>
+            <th>{% anchor category _("Category:") %}</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
-        </thead >
+        </thead>
         <tbody class="table-body">
         {% for product in all_products %}
             <tr>
@@ -34,16 +36,14 @@
                 <td>{{ product.price }}</td>
                 <td>{{ product.category }}</td>
                 <td>
-                <form method="post" action="{% url 'product edit' product.slug %}">
-                    {% csrf_token %}
-                    <button type="submit">Edit</button>
-                </form>
+                    <a href="{% url 'product edit' product.slug %}">
+                        <button>Edit</button>
+                    </a>
                 </td>
                 <td>
-                <form method="post" action="{% url 'product delete' product.slug %}">
-                    {% csrf_token %}
-                    <button type="submit">Delete</button>
-                </form>
+                    <a href="{% url 'product delete' product.slug %}">
+                        <button>Delete</button>
+                    </a>
                 </td>
             </tr>
         {% endfor %}

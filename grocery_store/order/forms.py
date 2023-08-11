@@ -7,7 +7,7 @@ class SearchForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Search by product name...',
+                'placeholder': 'Search by status...',
             },
         )
     )

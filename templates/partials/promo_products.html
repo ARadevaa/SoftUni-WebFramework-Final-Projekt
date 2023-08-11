@@ -7,8 +7,8 @@
                 <img src="{{ promo.product.product_image }}" alt="{{ promo.product.name }}">
                 <p><s class="price">{{ promo.product.price }}<i>lv.</i></s></p>
                 <p class="discount-price">{{ promo.discounted_price }}<i>lv.</i></p>
-                <p class="quantity">{{ promo.product.product_quantity }}<i>gr.</i></p>
-                <p class="percentage">{{ promo.discount_percentage }}<i>%</i></p>
+                <p class="quantity">{{ promo.product.product_quantity }}<i> kg/one piece</i></p>
+                <p class="percentage">{{ promo.discount_percentage }}<i>% discount</i></p>
                 <form method="post" action="{% url 'add_to_cart' promo.product.slug %}">
                     {% csrf_token %}
                     <input type="number" name="quantity" value="1">

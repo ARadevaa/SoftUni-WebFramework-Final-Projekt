@@ -9,6 +9,4 @@ class DeliveryAddForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Customize the form fields here (e.g., add labels, help texts, etc.)
-        # For example, you can change the delivery_date widget to use a DateInput:
         self.fields['delivery_date'].widget = forms.DateInput(attrs={'type': 'date'})

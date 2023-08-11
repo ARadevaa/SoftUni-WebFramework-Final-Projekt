@@ -5,7 +5,6 @@ from django.utils.timezone import now
 
 from grocery_store.categories.models import Category
 from grocery_store.common.forms import SearchForm
-from grocery_store.inventory.decorators import group_required
 from grocery_store.inventory.forms import DeliveryAddForm
 from grocery_store.inventory.models import Report, Delivery
 from grocery_store.order.models import Order
@@ -41,7 +40,6 @@ def delivery_add(request):
 
 
 @login_required
-@group_required('Staff')
 def inventory_details(request):
     categories = Category.objects.all()
     products = Product.objects.all()

@@ -1,8 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
-
-# Create your views here.
+from django.contrib.messages import error, success
+from django.shortcuts import  get_object_or_404
 from django.shortcuts import render, redirect
 from grocery_store.product.models import Product
 
@@ -12,7 +10,21 @@ def add_to_cart(request, product_slug):
     product = get_object_or_404(Product, slug=product_slug)
     quantity = int(request.POST.get('quantity', 1))
 
-    cart_items = request.session.get('cart_items', [])  # Get the existing cart items from the session
+    available_quantity = product.available_quantity
+
+    if quantity <= 0:
+        error(request, 'Invalid quantity.')
+        return redirect('category details')
+
+    if quantity > available_quantity:
+        error(request, 'Requested quantity exceeds available quantity.')
+        return redirect('category details')
+
+    cart_items = request.session.get('cart_items', [])
+
+    if not isinstance(cart_items, list):
+        # If cart_items is not a list, create an empty list
+        cart_items = []
 
     # Check if the product is already in the cart
     for item in cart_items:
@@ -20,11 +32,11 @@ def add_to_cart(request, product_slug):
             item['quantity'] += quantity
             break
     else:
-        # If the product is not in the cart, add it to the cart items list
         cart_items.append({'product_id': product.id, 'quantity': quantity})
 
     request.session['cart_items'] = cart_items  # Save the updated cart items to the session
 
+    success(request, 'Product added to cart.')
     return redirect('category details')
 
 

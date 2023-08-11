@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base/base.html' %}
 
-</body>
-</html>
+{% block page_content %}
+    <h1>Are you sure you want to delete {{ product.name }}</h1>
+    <form action="{% url 'product delete' product_name=product.slug %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="promotions button" type="submit">Delete Product</button>
+        <a class="btn btn-primary" href="javascript:history.back()">
+            <button class="edit-btn" type="button">Go back</button>
+        </a>
+    </form>
+{% endblock %}

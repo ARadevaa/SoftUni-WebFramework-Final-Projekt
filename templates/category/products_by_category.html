@@ -22,31 +22,8 @@
             </ul>
         {% empty %}
             <li>
-                No promo products.
+                No products to this category.
             </li>
         {% endfor %}
-        {#<table class="table-head">#}
-        {#  <thead>#}
-        {#    <tr>#}
-        {#      <th>Name</th>#}
-        {#      <th>Price</th>#}
-        {#      <th>Description</th>#}
-        {#      <th>Image</th>#}
-        {#      <!-- Add more fields here as needed -->#}
-        {#    </tr>#}
-        {#  </thead>#}
-        {#  <tbody class="table-body">#}
-        {#    {% for product in products %}#}
-        {#    <tr>#}
-        {#      <td>{{ product.name }}</td>#}
-        {#      <td>{{ product.price }}</td>#}
-        {#      <td>{{ product.description }}</td>#}
-        {#      <td><img src="{{ product.product_image }}" alt="{{ product.name }}" style="width: 150px; height: auto;"></td>#}
-        {#      <!-- Adjust the width value to your desired size -->#}
-        {#      <!-- Add more fields here as needed -->#}
-        {#    </tr>#}
-        {#    {% endfor %}#}
-        {#  </tbody>#}
-        {#</table>#}
-
+    </div>
 {% endblock %}

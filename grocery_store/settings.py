@@ -17,7 +17,10 @@ SECRET_KEY = 'django-insecure-w=883%6h79l@k$p9)x9yf$wa-tgh_up$5os_7bv&6g0_0(745d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -39,6 +42,7 @@ INSTALLED_APPS = [
     'grocery_store.payment',
     'grocery_store.product',
     'grocery_store.user_profile',
+    'webstack_django_sorting',
 ]
 
 MIDDLEWARE = [

@@ -41,3 +41,4 @@ class RegisterUserForm(auth_forms.UserCreationForm):
                 }
             ),
         }
+

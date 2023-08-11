@@ -1,10 +1,7 @@
-from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
-
-
-from grocery_store.categories.forms import CategoryCreateForm
+from grocery_store.categories.forms import CategoryCreateForm, SearchForm
 from grocery_store.categories.models import Category
-from grocery_store.inventory.decorators import group_required
 from grocery_store.product.models import Product, Promo
 
 
@@ -22,7 +19,7 @@ def products_by_category(request, category_id):
     return render(request, 'category/products_by_category.html', context)
 
 
-@group_required("Staff")
+# @group_required("Staff")
 def category_add(request):
     form = CategoryCreateForm
 
@@ -39,26 +36,34 @@ def category_add(request):
     }
     return render(request, 'category/category-add-page.html', context)
 
-@login_required
-def category_details(request):
+
+def category_list(request):
     categories = Category.objects.all()
-    products = Product.objects.all()
+    all_products = Product.objects.exclude(promo__isnull=False)
     promo_products = Promo.objects.all()
+    paginator = Paginator(all_products, 5)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    search_form = SearchForm(request.GET)
+
+    if search_form.is_valid():
+        search_text = search_form.cleaned_data['search_text']
+        categories = categories.filter(name__icontains=search_text)
 
     context = {
-        "all_products": products,
+        "all_products": all_products,
+        "page_obj": page_obj,
         "all_categories": categories,
         "promo_products": promo_products,
+        "search_form": search_form,
     }
 
     return render(request, 'category/category-details-page.html', context)
 
 
-@group_required("Staff")
 def category_edit(request):
     return render(request, 'category/category-edit-page.html')
 
 
-@group_required("Staff")
 def category_delete(request):
     return render(request, 'category/category-delete-page.html')
