@@ -1,15 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import error, success
+import json
+from django.http import JsonResponse
 from django.shortcuts import  get_object_or_404
 from django.shortcuts import render, redirect
 from grocery_store.product.models import Product
 
 
-@login_required
+@login_required(login_url='/user_profile/login/')
 def add_to_cart(request, product_slug):
     product = get_object_or_404(Product, slug=product_slug)
     quantity = int(request.POST.get('quantity', 1))
-
     available_quantity = product.available_quantity
 
     if quantity <= 0:
@@ -39,7 +40,7 @@ def add_to_cart(request, product_slug):
     success(request, 'Product added to cart.')
     return redirect('category details')
 
-
+@login_required
 def remove_from_cart(request, product_slug):
     product = get_object_or_404(Product, slug=product_slug)
     quantity = int(request.POST.get('quantity', 1))
